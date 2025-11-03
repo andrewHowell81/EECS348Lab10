@@ -34,41 +34,30 @@ bool isDouble(string word)
     return true;
 }
 
-// '8' == '0' + 8
-
-
-// '9' + '3' == ('9' + '3' - 2 * '0') / 10
-// ('9' + '3' - 2 * '0') % 10
-
-// 943.92
-// 9546.129
-
-bool getSign(string num)
+bool getSign(string* num)
 {
-    if (!isdigit(num[0]))
+    if (!isdigit((*num)[0]))
     {
-        if(num[0]=='-')
+        if((*num)[0]=='-')
         {
-            num.erase(0,1);
+            (*num).erase(0,1);
             return false;
         }
-        num.erase(0,1);
+        (*num).erase(0,1);
     }
     return true;
-}
-
-string signless()
-{
-    return "string";
 }
 
 string addNums(string num1, string num2)
 {   
     int decimal1 = num1.find('.');
     int decimal2 = num2.find('.');
-    bool sign1 = getSign(num2);
-    bool sign2 = getSign(num2);
-    
+
+    bool sign1 = getSign(&num1);
+    bool sign2 = getSign(&num2);
+
+    if (decimal1 == -1){num1 = num1 + ".0";}
+    if (decimal2 == -1) {num2 = num2 + ".0";}
     while (decimal1 != decimal2)
     {
         if (decimal1 < decimal2)
@@ -82,22 +71,53 @@ string addNums(string num1, string num2)
         decimal1 = num1.find('.');
         decimal2 = num2.find('.');
     }
-    cout << num1 << endl;
-    cout << num2 << endl;
-
-    if(num1[0] == '-' && num2[0] != '-')
-    {
-
+    int diff = num1.length()-num2.length();
+    while (diff!=0){
+        if (diff<0)
+        {
+            num1 = num1 + '0';
+            diff++;
+        }
+        else if (diff>0)
+        {
+            num2 = num2 + '0';
+            diff--;
+        }
     }
-    else if (num1[0] != '-' && num2[0] == '-')
+    int index = num1.length()-1;
+    char carry = '0';
+    int next;
+    char num1next;
+    char num2next;
+    std::string output = "Hello";
+    while (index>=0)
     {
+        num1next = num1[index];
+        num2next = num2[index];
+        if(sign1 && !sign2)
+        {
 
+        }
+        else if (!sign1 && sign2)
+        {
+
+        }
+        else
+        {
+            //next = (num1[index] + num2[index] + carry - 3 * '0') / 10;
+            if (num1next != '.')
+            {
+                next = (num1next + num2next - (2 * '0')) % 10;
+                cout << next << endl;
+                // This works: cout << (num1next + num2next - (2 * '0')) % 10 << endl;
+                output = next + output;
+            }
+            
+            //carry = (num1[index] + num2[index] + carry - 3 * '0') % 10;
+        }
+        index--;
     }
-    else
-    {
-        
-    }
-    return "Balls";
+    return "balls";
 }
 
 int main() 
@@ -116,11 +136,11 @@ int main()
             if (isDouble(word1) && isDouble(word2))
             {
                 cout << "Valid" << endl;
-                addNums(word1,word2);
+                cout << word1 << "+" << word2 << " = " << addNums(word1,word2) << endl;
             }
             else 
             {
-                cout << "invalid" << endl;
+                cout << word1 << " " << word2 << " " << "Invalid Input" << endl;
             }
         }
     }

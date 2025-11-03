@@ -45,28 +45,28 @@ bool isDouble(string word)
 
 bool getSign(string num)
 {
-    if (!isDigit(num[0]))
+    if (!isdigit(num[0]))
     {
         if(num[0]=='-')
         {
             num.erase(0,1);
-            return false
+            return false;
         }
         num.erase(0,1);
     }
-    return true
+    return true;
 }
 
 string signless()
 {
-    
+    return "string";
 }
 
 string addNums(string num1, string num2)
 {   
     int decimal1 = num1.find('.');
     int decimal2 = num2.find('.');
-    bool sign1 = getSign(num2)
+    bool sign1 = getSign(num2);
     bool sign2 = getSign(num2);
     
     while (decimal1 != decimal2)
@@ -79,9 +79,11 @@ string addNums(string num1, string num2)
         {
             num2 = '0' + num2;
         }
+        decimal1 = num1.find('.');
+        decimal2 = num2.find('.');
     }
-    cout << num1;
-    cout << num2;
+    cout << num1 << endl;
+    cout << num2 << endl;
 
     if(num1[0] == '-' && num2[0] != '-')
     {

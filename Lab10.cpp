@@ -3,6 +3,7 @@
 #include <string>
 #include <cctype>
 using namespace std;
+//Updates version
 
 bool getSign(string* num) // returns true if positive
 {
